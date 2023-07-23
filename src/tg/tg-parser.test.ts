@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { readFileSync } from 'fs';
-import { parseTgChannel } from '../tg-parser.js';
+import { parseTgChannel } from '../tg/tg-parser.js';
 
 const sampleHtml = readFileSync(path.resolve(__dirname, 'sample.html'), 'utf8');
 
