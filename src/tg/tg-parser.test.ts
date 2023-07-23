@@ -27,7 +27,7 @@ const SAMPLE_EVENTS = [
   'Повітряна тривога в Донецька область',
 ] as const;
 
-export const CHANNEL_NAME = 'air_alert_ua';
+const CHANNEL_NAME = 'air_alert_ua';
 
 const fetchMock = jest
   .spyOn(global, 'fetch')

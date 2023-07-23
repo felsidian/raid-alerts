@@ -1,8 +1,9 @@
 import Database from 'better-sqlite3';
+import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { areasState } from '../area-state.js';
-import { areasTable } from './schema.js';
+import { Area, areasTable } from './schema.js';
 
 const db = drizzle(new Database('raid-alerts.db'));
 
@@ -10,13 +11,25 @@ migrate(db, { migrationsFolder: 'drizzle' });
 
 db.insert(areasTable)
   .values(
-    Object.entries(areasState).map((entry) => {
-      return { id: entry[0], ...entry[1] };
+    areasState.map((areaState, i) => {
+      return { id: i, ...areaState };
     }),
   )
   .onConflictDoNothing()
   .run();
 
-const result = db.select().from(areasTable).all();
+const r = db
+  .select({
+    name: areasTable.name,
+    alert: areasTable.alert,
+    updated: areasTable.updated,
+  })
+  .from(areasTable)
+  .all();
 
-console.log(result);
+areasState.splice(0, areasState.length, ...r);
+console.log(areasState);
+
+export function updateArea(area: Area) {
+  db.update(areasTable).set(area).where(eq(areasTable.id, area.id)).run();
+}
