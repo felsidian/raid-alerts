@@ -1,0 +1,21 @@
+{
+  "preset": "ts-jest",
+  "resolver": "ts-jest-resolver",
+  "reporters": [
+    "default",
+    ["jest-junit", { "outputDirectory": "test-reports/" }],
+    [
+      "./node_modules/jest-html-reporter",
+      {
+        "pageTitle": "Test Report",
+        "includeFailureMsg": true,
+        "includeConsoleLog": true
+      }
+    ]
+  ],
+  "testEnvironment": "node",
+  "coveragePathIgnorePatterns": ["__tests__/util"],
+  "testPathIgnorePatterns": ["__tests__/util"],
+  "coverageDirectory": "test-reports/",
+  "testMatch": ["**/*.test.ts"]
+}

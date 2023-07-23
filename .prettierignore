@@ -1,0 +1,8 @@
+**/*.js
+**/*.d.ts
+**/*.html
+
+!jest.config.js
+!.eslintrc.js
+
+package-lock.json

@@ -1,15 +1,10 @@
-import path from 'path';
+import * as path from 'path';
 import { readFileSync } from 'fs';
-import { parseTgChannel } from '../tg-parser';
+import { parseTgChannel } from '../tg-parser.js';
 
 const sampleHtml = readFileSync(path.resolve(__dirname, 'sample.html'), 'utf8');
 
 const SAMPLE_EVENTS = [
-  'Відбій тривоги в Донецька область',
-  'Повітряна тривога в Донецька область',
-  'Повітряна тривога в Дніпропетровська область',
-  'Повітряна тривога в Херсонська область',
-  'Повітряна тривога в Миколаївська область',
   'Відбій тривоги в Дніпропетровська область',
   'Відбій тривоги в Миколаївська область',
   'Відбій тривоги в Херсонська область',
@@ -25,9 +20,14 @@ const SAMPLE_EVENTS = [
   'Загроза артобстрілу',
   'Повітряна тривога в Чернігівська область',
   'Повітряна тривога в Сумська область',
+  'Відбій тривоги в Чернігівська область',
+  'Відбій загрози артобстрілу',
+  'Відбій тривоги в Сумська область',
+  'Повітряна тривога в Запорізька область',
+  'Повітряна тривога в Донецька область',
 ] as const;
 
-const CHANNEL_NAME = 'air_alert_ua';
+export const CHANNEL_NAME = 'air_alert_ua';
 
 const fetchMock = jest
   .spyOn(global, 'fetch')
@@ -35,7 +35,6 @@ const fetchMock = jest
 
 it('Should parse TG channel', async () => {
   const messages = await parseTgChannel(CHANNEL_NAME);
-  console.log(messages);
 
   expect(fetchMock).toHaveBeenCalledWith(`https://t.me/s/${CHANNEL_NAME}`);
 
